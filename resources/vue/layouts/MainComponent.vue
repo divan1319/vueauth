@@ -1,9 +1,7 @@
 <template>
     <main>
         <div class="uk-section">
-            <div class="uk-container">
-                <p>AQUI VA LA APLICACION</p>
-            </div>
+            <router-view/>
         </div>
     </main>
 </template>

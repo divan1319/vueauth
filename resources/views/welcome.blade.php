@@ -20,6 +20,8 @@
     <script src="https://cdn.jsdelivr.net/npm/uikit@3.14.3/dist/js/uikit.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/uikit@3.14.3/dist/js/uikit-icons.min.js"></script>
     <script src="{{ mix('js/app.js')}}"></script>
+    <script src="{{ mix('js/custom.js')}}"></script>
+
 </body>
 
 </html>

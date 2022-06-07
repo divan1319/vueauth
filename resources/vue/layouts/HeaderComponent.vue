@@ -11,7 +11,9 @@
                         </div>
                         <div class="uk-navbar-right">
                             <ul class="uk-navbar-nav">
-                                <li class="uk-active"><a href="#" uk-toggle="target: #login">Acceso</a></li>
+                                <li
+                                v-if="!isAuth"
+                                class="uk-active"><a href="#" uk-toggle="target: #login">Acceso</a></li>
 
                             </ul>
                         </div>
@@ -23,6 +25,11 @@
 
 <script>
     export default {
-
+        props:{
+            isAuth:{
+                type: Boolean,
+                required: true
+            }
+        }
     }
 </script>

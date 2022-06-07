@@ -2,8 +2,8 @@
     <div id="login" uk-modal>
         <div class="uk-modal-dialog uk-modal-body">
             <ul class="uk-tab uk-flex-center" uk-grid uk-switcher="animation: uk-animation-fade">
-                <li><a href="#">Registro</a></li>
                 <li><a href="#">Iniciar Sesión</a></li>
+                <li><a href="#">Registrarme</a></li>
                 <li class="uk-hidden"><a href="#">Recuperar Contraseña</a></li>
             </ul>
             <ul class="uk-switcher uk-margin">
