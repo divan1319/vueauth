@@ -9,12 +9,14 @@
             <ul class="uk-switcher uk-margin">
                 <!-------------------------REGISTRO FORM------------------------------>
                 <li>
-                    <login-form></login-form>
+                    <login-form
+                    @submit="submitForm"></login-form>
 
                 </li>
                 <!----------------------INICIO FORM------------------------------------>
                 <li>
-                    <register-form></register-form>
+                    <register-form
+                    @submit="submitForm"></register-form>
 
                 </li>
                 <!-------------------RECUPERACION FORM---------------------------------->
@@ -35,6 +37,19 @@ export default {
         LoginForm,
         RegisterForm,
         ResetPasswordForm
+    },
+    methods:{
+        submitForm (payload) {
+            store.dispatch('setAuthUser');
+
+            UIkit.notification({
+                message: payload.message,
+                status: 'success'
+            });
+
+            UIkit.modal('#login').hide();
+
+        }
     }
 }
 

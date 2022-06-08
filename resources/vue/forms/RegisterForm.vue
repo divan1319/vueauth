@@ -42,10 +42,16 @@ import TextInputComponent from '../components/forms/TextInputComponent.vue'
 import CheckboxInputComponent from '../components/forms/CheckboxInputComponent.vue'
 import ButtonComponent from '../components/ButtonComponent.vue'
 export default {
+
     components: {
         TextInputComponent,
         CheckboxInputComponent,
         ButtonComponent
+    },
+    emits: {
+        submit : (payload) =>{
+            return payload
+        }
     },
     data() {
         return {
@@ -64,21 +70,29 @@ export default {
     methods:{
         onSubmit(){
             if(this.registerFormValidator.status && this.terms){
+
                 axios.post('/register',{
                     name: this.name,
                     email: this.email,
                     password: this.password,
                     password_confirmation: this.password_confirmation
+
                 }).then(res => {
 
-                    console.log(res);
+                    this.$emit('submit',{
+                        message:"Cuenta creada exitosamente",
+                        res : res,
+                    });
 
                 }).catch(error => {
+
+
+                    console.log(error);
                     UIkit.notification({
                     message:'Ha ocurrido un error',
                     status:'danger'
                     });
-                });
+                })
 
             }else{
                 UIkit.notification({

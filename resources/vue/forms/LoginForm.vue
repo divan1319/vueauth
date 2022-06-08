@@ -1,5 +1,5 @@
 <template>
-    <form>
+    <form id="InicioSesionForm" @submit.prevent="onSubmit">
         <h3 class="uk-card-title uk-text-center">Welcome back!</h3>
         <text-input-component
             type="email"
@@ -32,17 +32,64 @@
 <script>
 import TextInputComponent from '../components/forms/TextInputComponent.vue'
 import ButtonComponent from '../components/ButtonComponent.vue'
+import axios from 'axios';
 export default {
     components:{
         TextInputComponent,
         ButtonComponent
     },
 
+    emits:{
+        submit : (payload) =>{
+            return payload;
+        }
+    },
+
     data(){
         return {
             email:"",
             password:"",
-            disable: false
+            disable: false,
+            loginFormValidator: undefined
+        }
+    },
+
+    mounted(){
+        this.loginFormValidator = new JSValidator('InicioSesionForm').init();
+    },
+
+    methods : {
+        onSubmit(){
+            if(this.loginFormValidator.status){
+                this.disable = true;
+                axios.post('/login',{
+                    email: this.email,
+                    password: this.password
+                }).then(res => {
+
+                    console.log(res);
+                    
+                    this.$emit('submit',{
+                        message:'Inicio de sesion exitoso',
+                        res: res
+                    })
+
+                }).catch(error => {
+                    console.log(error);
+                    this.disable = false;
+                    UIkit.notification({
+                    message: 'Usuario o contaseña incorrectos',
+                    status: 'danger'
+                    });
+                });
+
+            }else{
+                this.disable = false;
+                UIkit.notification({
+                    message: 'Error de validacion',
+                    status: 'danger'
+                });
+            }
         }
     }
 }
