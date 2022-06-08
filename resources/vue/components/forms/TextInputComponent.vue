@@ -8,13 +8,14 @@
             </span>
 
             <input class="uk-input uk-form-large" 
-            :class="customClass"
-            :type="type"
+            :class= "customClass"
+            :type= "type"
             :name = "name"
-            :placeholder="placeholder"
-            :data-validators="validators"
+            :placeholder = "placeholder"
+            :data-validators ="validators"
             :data-min_length = "min_length"
-            v-model="value">
+            :data-max_length = "max_length"
+            v-model = "value">
 
         </div>
     </div>
@@ -49,6 +50,14 @@ export default {
             default: ""
         },
         validators:{
+            type: String,
+            required: false
+        },
+        min_length:{
+            type: String,
+            required: false
+        },
+        max_length:{
             type: String,
             required: false
         }

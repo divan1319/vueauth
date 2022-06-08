@@ -19986,6 +19986,14 @@ __webpack_require__.r(__webpack_exports__);
     validators: {
       type: String,
       required: false
+    },
+    min_length: {
+      type: String,
+      required: false
+    },
+    max_length: {
+      type: String,
+      required: false
     }
   },
   emits: ['update:modelValue'],
@@ -20070,8 +20078,36 @@ __webpack_require__.r(__webpack_exports__);
       password: "",
       password_confirmation: "",
       terms: false,
-      disable: false
+      disable: false,
+      registerFormValidator: undefined
     };
+  },
+  mounted: function mounted() {
+    this.registerFormValidator = new JSValidator('RegisterForm').init();
+  },
+  methods: {
+    onSubmit: function onSubmit() {
+      if (this.registerFormValidator.status && this.terms) {
+        axios.post('/register', {
+          name: this.name,
+          email: this.email,
+          password: this.password,
+          password_confirmation: this.password_confirmation
+        }).then(function (res) {
+          console.log(res);
+        })["catch"](function (error) {
+          UIkit.notification({
+            message: 'Ha ocurrido un error',
+            status: 'danger'
+          });
+        });
+      } else {
+        UIkit.notification({
+          message: 'Error de validacion',
+          status: 'danger'
+        });
+      }
+    }
   }
 });
 
@@ -20303,7 +20339,7 @@ var _hoisted_2 = {
   "class": "uk-inline uk-width-1-1"
 };
 var _hoisted_3 = ["uk-icon"];
-var _hoisted_4 = ["type", "name", "placeholder", "data-validators", "data-min_length"];
+var _hoisted_4 = ["type", "name", "placeholder", "data-validators", "data-min_length", "data-max_length"];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [$options.hasIcon ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", {
     key: 0,
@@ -20317,7 +20353,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     name: $props.name,
     placeholder: $props.placeholder,
     "data-validators": $props.validators,
-    "data-min_length": _ctx.min_length,
+    "data-min_length": $props.min_length,
+    "data-max_length": $props.max_length,
     "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
       return $options.value = $event;
     })
@@ -20442,12 +20479,20 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   var _component_button_component = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("button-component");
 
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("form", null, [_hoisted_1, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_text_input_component, {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("form", {
+    id: "RegisterForm",
+    onSubmit: _cache[5] || (_cache[5] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
+      return $options.onSubmit && $options.onSubmit.apply($options, arguments);
+    }, ["prevent"]))
+  }, [_hoisted_1, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_text_input_component, {
+    customClass: "jsValidator",
     type: "text",
     name: "name",
     placeholder: "Nombre Completo",
     icon: "user",
-    validators: "required",
+    validators: "required length",
+    min_length: "10",
+    max_length: "100",
     modelValue: $data.name,
     "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
       return $data.name = $event;
@@ -20455,6 +20500,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }, null, 8
   /* PROPS */
   , ["modelValue"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_text_input_component, {
+    customClass: "jsValidator",
     type: "email",
     name: "email",
     placeholder: "example@gmail.com",
@@ -20467,11 +20513,13 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }, null, 8
   /* PROPS */
   , ["modelValue"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_text_input_component, {
+    customClass: "jsValidator",
     type: "password",
     name: "password",
     placeholder: "Contraseña",
     icon: "lock",
-    validators: "required",
+    validators: "required length",
+    min_length: "8",
     modelValue: $data.password,
     "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
       return $data.password = $event;
@@ -20479,6 +20527,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }, null, 8
   /* PROPS */
   , ["modelValue"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_text_input_component, {
+    customClass: "jsValidator",
     type: "password",
     name: "password_confirmation",
     placeholder: "Confirmar Contraseña",
@@ -20491,6 +20540,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }, null, 8
   /* PROPS */
   , ["modelValue"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_checkbox_input_component, {
+    customClass: "jsValidator",
     name: "terms",
     text: "Estoy de acuerdo con los termino y condiciones",
     validators: "checked",
@@ -20506,7 +20556,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     value: "Registrarme"
   }, null, 8
   /* PROPS */
-  , ["disable"]), _hoisted_2]);
+  , ["disable"]), _hoisted_2], 32
+  /* HYDRATE_EVENTS */
+  );
 }
 
 /***/ }),
