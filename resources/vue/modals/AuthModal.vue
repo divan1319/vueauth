@@ -22,7 +22,8 @@
                 <!-------------------RECUPERACION FORM---------------------------------->
                 <li>
 
-                    <reset-password-form></reset-password-form>
+                    <reset-password-form
+                    @submit="submitForm"></reset-password-form>
                 </li>
             </ul>
         </div>

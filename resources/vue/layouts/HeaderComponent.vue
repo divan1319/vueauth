@@ -14,7 +14,7 @@
                                 <li
                                 v-if="!isAuth"
                                 class="uk-active"><a href="#" uk-toggle="target: #login">Acceso</a></li>
-
+                                <li v-if="isAuth"><logout-component text="Cerrar Sesion"></logout-component></li>
                             </ul>
                         </div>
                     </nav>
@@ -24,12 +24,17 @@
 </template>
 
 <script>
+import LogoutComponent from '../components/LogoutComponent.vue'
     export default {
         props:{
             isAuth:{
                 type: Boolean,
                 required: true
             }
+        },
+        components:{
+            LogoutComponent
         }
+        
     }
 </script>
