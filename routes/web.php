@@ -18,6 +18,8 @@ Route::get('/{var1?}/{var2?}', function () {
     
 });
 
+
+
 Route::get('/reset-password/{token}',function(){
     return view('welcome');
 })->name('password.reset');

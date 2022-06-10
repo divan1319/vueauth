@@ -14,6 +14,7 @@
                                 <li
                                 v-if="!isAuth"
                                 class="uk-active"><a href="#" uk-toggle="target: #login">Acceso</a></li>
+                                <li v-if="isAuth"><a href="#">Contribuir</a></li>
                                 <li v-if="isAuth"><logout-component text="Cerrar Sesion"></logout-component></li>
                             </ul>
                         </div>
